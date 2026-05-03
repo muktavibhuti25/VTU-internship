@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Smart Waste Dashboard</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        body {
+            background: #f4f6f9;
+        }
+        .card {
+            border-radius: 15px;
+            box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+
+<body class="container mt-4">
+
+<h2 class="text-center mb-4">♻️ Smart Waste Management Dashboard</h2>
+
+<!-- Upload Section -->
+<div class="card p-3 mb-4">
+    <form method="POST" enctype="multipart/form-data">
+        <input type="file" name="image" class="form-control mb-2" required>
+        <button class="btn btn-primary w-100">Upload & Analyze</button>
+    </form>
+</div>
+
+{% if waste_type %}
+
+<!-- Results Row -->
+<div class="row">
+
+    <!-- Waste Type -->
+    <div class="col-md-4">
+        <div class="card p-3 text-center">
+            <h5>Waste Type</h5>
+            <h3 class="text-success">{{ waste_type }}</h3>
+        </div>
+    </div>
+
+    <!-- Fill Level -->
+    <div class="col-md-4">
+        <div class="card p-3 text-center">
+            <h5>Fill Level</h5>
+            <div class="progress">
+                <div class="progress-bar bg-danger"
+                     style="width: {{ fill_prediction }}%">
+                    {{ fill_prediction }}%
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Prediction -->
+    <div class="col-md-4">
+        <div class="card p-3 text-center">
+            <h5>Prediction</h5>
+            <h4 class="text-warning">Full by Day {{ full_day }}</h4>
+        </div>
+    </div>
+
+</div>
+
+<!-- Graph Section -->
+<div class="card mt-4 p-3">
+    <h5 class="text-center">📊 Fill Level Trend</h5>
+    <canvas id="chart"></canvas>
+</div>
+
+{% endif %}
+
+<script>
+    const ctx = document.getElementById('chart');
+
+    const chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: {{ days | tojson }},
+            datasets: [{
+                label: 'Fill Level (%)',
+                data: {{ levels | tojson }},
+                borderWidth: 2,
+                tension: 0.3
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 100
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
