@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Finance Assistant</title>
+    <style>
+        body {
+            font-family: Arial;
+            text-align: center;
+            background: #f5f7fa;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        #chatbox {
+            width: 60%;
+            margin: auto;
+            border: 1px solid #ccc;
+            padding: 15px;
+            background: white;
+            height: 300px;
+            overflow-y: scroll;
+            border-radius: 10px;
+        }
+
+        .user {
+            color: blue;
+            text-align: right;
+        }
+
+        .bot {
+            color: green;
+            text-align: left;
+        }
+
+        input {
+            width: 40%;
+            padding: 10px;
+            margin-top: 10px;
+        }
+
+        button {
+            padding: 10px 15px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #45a049;
+        }
+
+        img {
+            width: 400px;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+
+<h2>💰 Smart Finance Assistant</h2>
+
+<div id="chatbox"></div>
+
+<input type="text" id="userInput" placeholder="Type message..." />
+<button onclick="sendMessage()">Send</button>
+
+<br>
+<img src="/static/chart.png" id="chart" />
+
+<script>
+function sendMessage() {
+    let input = document.getElementById("userInput").value;
+    let chatbox = document.getElementById("chatbox");
+
+    if (input.trim() === "") return;
+
+    chatbox.innerHTML += "<p class='user'>You: " + input + "</p>";
+
+    fetch("/get", {
+        method: "POST",
+        headers: {"Content-Type": "application/x-www-form-urlencoded"},
+        body: "msg=" + input
+    })
+    .then(res => res.json())
+    .then(data => {
+        chatbox.innerHTML += "<p class='bot'>Bot: " + data + "</p>";
+
+        if (input.includes("chart")) {
+            document.getElementById("chart").src = "/static/chart.png?" + new Date().getTime();
+        }
+
+        chatbox.scrollTop = chatbox.scrollHeight;
+        document.getElementById("userInput").value = "";
+    });
+}
+</script>
+
+</body>
+</html>

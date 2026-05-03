@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Shoplifting Detection</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #4facfe, #00f2fe);
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            margin-top: 80px;
+            background: white;
+            padding: 30px;
+            width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: 15px;
+            box-shadow: 0px 8px 20px rgba(0,0,0,0.2);
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        input[type="file"] {
+            margin: 15px 0;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .output-box {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f0f8ff;
+            border-radius: 10px;
+        }
+
+        a {
+            text-decoration: none;
+            color: white;
+            background-color: #ff5722;
+            padding: 10px 15px;
+            border-radius: 8px;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        a:hover {
+            background-color: #e64a19;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h2>🛒 Shoplifting Detection</h2>
+
+    <form method="POST" enctype="multipart/form-data">
+        <input type="file" name="video" required><br>
+        <button type="submit">Upload & Detect</button>
+    </form>
+
+    {% if video %}
+        <div class="output-box">
+            <h3>✅ Output Ready</h3>
+            <a href="{{ url_for('static', filename=video) }}" target="_blank">
+                ▶ View Processed Video
+            </a>
+        </div>
+    {% endif %}
+
+</div>
+
+</body>
+</html>

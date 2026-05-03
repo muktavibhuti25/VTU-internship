@@ -1,0 +1,9 @@
+symptoms,disease,precautions
+fever cough headache,Flu,Rest;Drink fluids;Paracetamol
+fever chills sweating,Malaria,Consult doctor;Take medication;Avoid mosquitoes
+cough fatigue weight_loss,Tuberculosis,Consult doctor;Complete antibiotics;Wear mask
+headache nausea sensitivity_light,Migraine,Rest in dark room;Avoid stress;Medication
+stomach_pain vomiting diarrhea,Food Poisoning,Drink ORS;Avoid outside food;Rest
+cough fever breathing_issue,COVID-19,Isolate;Wear mask;Consult doctor
+itching rash redness,Allergy,Avoid allergens;Take antihistamines
+joint_pain stiffness swelling,Arthritis,Exercise;Medication;Consult doctor
